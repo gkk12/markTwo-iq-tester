@@ -1,44 +1,44 @@
 var readlineSync = require("readline-sync");
 const chalk = require('chalk');
 
-questionTranslatorOne = {
-  question: "Translate 'Are you there?' to German ",
-  answer: "Sind sie da?"
+riddleOne = {
+  question: "I can't be used until I'm broken, what am I? ",
+  answer1: "Egg",
+  answer2: "An Egg"
 }
 
-questionTranslatorTwo = {
-  question: "Translate 'Never meant to let you down' to German ",
-  answer: "Wollte dich nie im Stich lassen"
+riddleTwo = {
+  question: "I have a head and a tail, but no arms and legs. What am I? ",
+  answer1: "Coin",
+  answer2: "A Coin"
 }
 
-questionTranslatorThree = {
-  question: "Translate 'You know that I say that I am better now' to German",
-  answer: "Du weißt dass ich sage dass es mir jetzt besser geht"
+var riddles = [riddleOne, riddleTwo];
+
+mathQuizOne = {
+  question: "Find the missing number - 1,4,9,16,25,36,49,? ",
+  answer: "64",
+  reason: "64. 1^2,2^2,3^2,4^2,5^2,6^2,7^2,.. hence the next term is 8^2=64"
 }
 
-var questionsTranslator = [questionTranslatorOne,questionTranslatorTwo,questionTranslatorThree];
-
-questionQuizOne= {
-  question: "Last movie I watched? ",
-  answer: "Shershaah"
+mathQuizTwo = {
+  question: "If 1=3, 2=3, 3=5, 4=4, 5=4 then 6=? ",
+  answer: "3",
+  reason: "3 because 'six' has three letters"
 }
 
-questionQuizTwo = {
-  question: "What can you see once in a minute, twice in a moment and never in a thousand years? ",
-  answer: "M"
-}
+var mathQuiz = [mathQuizOne, mathQuizTwo];
 
-questionQuizThree = {
-  question: "What sleeps through the day and cries through the night. The more it cries, the more it creates light? ",
-  answer: "Candle"
+bonusQuestion = {
+  question: "You have 100 chocolates. You can return 4 wrappers and get one more chocolate. How many chocolates would you have at the end? ",
+  answer: "133",
+  reason: "Return all 100 wrappers and get 25 more chocolates. Return all 25 wrappers and get 6 more chocolates, 1 left over wrapper. Return all 6 wrappers and get 1 more chocolate, 2 left over wrappers. Return 1 wrapper and get that wrapper. Return 1+2+1 wrappers and get 1 chocolate. 100 + 25+ 6 + 1 + 1 = 133 chocolates"
 }
-
-var questionsQuiz = [questionQuizOne,questionQuizTwo,questionQuizThree];
 
 var scores = [
   {
       name: "Gautham",
-      highestScore: "3"
+      highestScore: "2"
   },
   {
       name: "Sam",
@@ -48,67 +48,95 @@ var scores = [
 
 var score =0;
 
-function checkKnowledge(questionToAsk,answer)
+function checkRiddleKnowledge(questionToAsk,answer1,answer2,reason)
+{
+  var userAnswer = readlineSync.question(questionToAsk);
+
+  if((userAnswer.toUpperCase() == answer1.toUpperCase())||
+  (userAnswer.toUpperCase() == answer2.toUpperCase())) 
+  {
+    console.log(chalk.green("You are right"));
+    score = score +1;
+  }
+  else
+  {
+    console.log(chalk.red("You are wrong."));
+    console.log("Solution: "+answer1);
+  }
+  console.log(chalk.bold.green("Score is: "+score));
+}
+
+function doRiddleTest()
+{
+  for(var i=0;i<riddles.length;i++)
+  {
+    checkRiddleKnowledge(riddles[i].question,riddles[i].answer1,riddles[i].answer2,riddles[i].reason);
+  }
+}
+
+function checkMathKnowledge(questionToAsk,answer,reason)
 {
   var userAnswer = readlineSync.question(questionToAsk);
 
   if(userAnswer.toUpperCase() == answer.toUpperCase())
   {
-    console.log("You are right");
+    console.log(chalk.green("You are right"));
     score = score +1;
-    
   }
   else
   {
-    console.log("You are wrong");
+    chalk.red
+    console.log(chalk.red("You are wrong."));
+    console.log("Solution: "+reason);
   }
   console.log(chalk.bold.green("Score is: "+score));
 }
 
-function checkLanguageSkills()
+function doMathQuiz()
 {
-  for(var i=0;i<questionsTranslator.length;i++)
+  for(var i=0;i<mathQuiz.length;i++)
   {
-  //console.log("Entered for loop");
-    checkKnowledge(questionsTranslator[i].question,questionsTranslator[i].answer);
+    checkMathKnowledge(mathQuiz[i].question,mathQuiz[i].answer,mathQuiz[i].reason);
   }
 }
 
-function checkIntelligence()
-{
-  for(var i=0;i<questionsQuiz.length;i++)
-  {
-  //console.log("Entered for loop");
-    checkKnowledge(questionsQuiz[i].question,questionsQuiz[i].answer);
-  }
-}
-
-choices = ['Language Test', 'Check intelligence'];
+choices = ['Riddle test', 'Check your Math IQ'];
 index = readlineSync.keyInSelect(choices, 'Choice?');
-
-//var userChoice = readlineSync.question("1. Language Test 2. Check intelligence Type 1 or 2 ");
 
 if(index == "0")
 {
-  checkLanguageSkills();
+  doRiddleTest();
 }
 else if(index == "1")
 {
-  checkIntelligence();
+  doMathQuiz();
 }
 else
 {
   console.log('Exited');
 }
 
-console.log(chalk.red("Highest Scores: "));
+// console.log(chalk.blue("Highest Scores: "));
 for(var j = 0;j< scores.length;j++)
 {
-  console.log(chalk.red(scores[j].name, ":", scores[j].highestScore));
-  if(score > scores[j].highestScore)
+  if(score == scores[j].highestScore)
   {
-    console.log(chalk.green("Congratulations, you have a new high score, kindly send a screenshot of this to me!"));
-  }
+    console.log(chalk.green("Congratulations, you have equalled the highest scores, please answer a bonus question and top the leaderboard !"));
+    
+    checkMathKnowledge(bonusQuestion.question,bonusQuestion.answer,bonusQuestion.reason);
+    if(score > (scores[j].highestScore))
+    {
+    console.log(chalk.green("Congratulations, you have a new high score, please send a screenshot to the admin!"));
+    }
+    else
+    {
+      break;
+    }
+  } 
+  
 }
-
-
+for(var j = 0;j< scores.length;j++)
+{
+  console.log(chalk.blue("Highest score "+ (j+1)+" "+scores[j].name, ":", scores[j].highestScore));
+  
+}
