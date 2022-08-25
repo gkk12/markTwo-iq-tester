@@ -99,7 +99,7 @@ function doMathQuiz()
     checkMathKnowledge(mathQuiz[i].question,mathQuiz[i].answer,mathQuiz[i].reason);
   }
 }
-
+var username = readlineSync.question('Enter your name:');
 choices = ['Riddle test', 'Check your Math IQ'];
 index = readlineSync.keyInSelect(choices, 'Choice?');
 
@@ -121,12 +121,12 @@ for(var j = 0;j< scores.length;j++)
 {
   if(score == scores[j].highestScore)
   {
-    console.log(chalk.green("Congratulations, you have equalled the highest scores, please answer a bonus question and top the leaderboard !"));
+    console.log(chalk.green("Congratulations " + username + ", you have equalled the highest scores, please answer a bonus question and top the leaderboard !"));
     
     checkMathKnowledge(bonusQuestion.question,bonusQuestion.answer,bonusQuestion.reason);
     if(score > (scores[j].highestScore))
     {
-    console.log(chalk.green("Congratulations, you have a new high score, please send a screenshot to the admin!"));
+    console.log(chalk.green("Congratulations " + username + ", you have a new high score, please send a screenshot to the admin!"));
     }
     else
     {
