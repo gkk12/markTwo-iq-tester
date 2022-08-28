@@ -37,106 +37,91 @@ bonusQuestion = {
 
 var scores = [
   {
-      name: "Gautham",
-      highestScore: "2"
+    name: "Gautham",
+    highestScore: "2"
   },
   {
-      name: "Sam",
-      highestScore: "2"
+    name: "Sam",
+    highestScore: "2"
   }
 ]
 
-var score =0;
+var score = 0;
 
-function checkRiddleKnowledge(questionToAsk,answer1,answer2,reason)
-{
+function checkRiddleKnowledge(questionToAsk, answer1, answer2, reason) {
   var userAnswer = readlineSync.question(questionToAsk);
 
-  if((userAnswer.toUpperCase() == answer1.toUpperCase())||
-  (userAnswer.toUpperCase() == answer2.toUpperCase())) 
-  {
+  if ((userAnswer.toUpperCase() == answer1.toUpperCase()) ||
+    (userAnswer.toUpperCase() == answer2.toUpperCase())) {
     console.log(chalk.green("You are right"));
-    score = score +1;
+    score = score + 1;
   }
-  else
-  {
+  else {
     console.log(chalk.red("You are wrong."));
-    console.log("Solution: "+answer1);
+    console.log("Solution: " + answer1);
   }
-  console.log(chalk.bold.green("Score is: "+score));
+  console.log(chalk.bold.green("Score is: " + score));
 }
 
-function doRiddleTest()
-{
-  for(var i=0;i<riddles.length;i++)
-  {
-    checkRiddleKnowledge(riddles[i].question,riddles[i].answer1,riddles[i].answer2,riddles[i].reason);
+function doRiddleTest() {
+  for (var i = 0; i < riddles.length; i++) {
+    checkRiddleKnowledge(riddles[i].question, riddles[i].answer1, riddles[i].answer2, riddles[i].reason);
   }
 }
 
-function checkMathKnowledge(questionToAsk,answer,reason)
-{
+function checkMathKnowledge(questionToAsk, answer, reason) {
   var userAnswer = readlineSync.question(questionToAsk);
 
-  if(userAnswer.toUpperCase() == answer.toUpperCase())
-  {
+  if (userAnswer.toUpperCase() == answer.toUpperCase()) {
     console.log(chalk.green("You are right"));
-    score = score +1;
+    score = score + 1;
   }
-  else
-  {
+  else {
     chalk.red
     console.log(chalk.red("You are wrong."));
-    console.log("Solution: "+reason);
+    console.log("Solution: " + reason);
   }
-  console.log(chalk.bold.green("Score is: "+score));
+  console.log(chalk.bold.green("Score is: " + score));
 }
 
-function doMathQuiz()
-{
-  for(var i=0;i<mathQuiz.length;i++)
-  {
-    checkMathKnowledge(mathQuiz[i].question,mathQuiz[i].answer,mathQuiz[i].reason);
+function doMathQuiz() {
+  for (var i = 0; i < mathQuiz.length; i++) {
+    checkMathKnowledge(mathQuiz[i].question, mathQuiz[i].answer, mathQuiz[i].reason);
   }
 }
-var username = readlineSync.question('Enter your name:');
+
+var username = readlineSync.question('Enter your name: ');
+
+console.log(chalk.bold.green("Welcome " + username));
 choices = ['Riddle test', 'Check your Math IQ'];
 index = readlineSync.keyInSelect(choices, 'Choice?');
 
-if(index == "0")
-{
+if (index == "0") {
   doRiddleTest();
 }
-else if(index == "1")
-{
+else if (index == "1") {
   doMathQuiz();
 }
-else
-{
+else {
   console.log('Exited');
 }
 
 // console.log(chalk.blue("Highest Scores: "));
-for(var j = 0;j< scores.length;j++)
-{
-  if(score == scores[j].highestScore)
-  {
+for (var j = 0; j < scores.length; j++) {
+  if (score == scores[j].highestScore) {
     console.log(chalk.green("Congratulations " + username + ", you have equalled the highest scores, please answer a bonus question and top the leaderboard !"));
-    
-    checkMathKnowledge(bonusQuestion.question,bonusQuestion.answer,bonusQuestion.reason);
-    if(score > (scores[j].highestScore))
-    {
-    console.log(chalk.green("Congratulations " + username + ", you have a new high score, please send a screenshot to the admin!"));
+
+    checkMathKnowledge(bonusQuestion.question, bonusQuestion.answer, bonusQuestion.reason);
+    if (score > (scores[j].highestScore)) {
+      console.log(chalk.green("Congratulations " + username + ", you have a new high score, please send a screenshot to the admin!"));
     }
-    else
-    {
+    else {
       break;
     }
-  } 
-  
+  }
+
 }
-for(var j = 0;j< scores.length;j++)
-{
-  console.log(chalk.blue("Highest score "+ (j+1)+" "+scores[j].name, ":", scores[j].highestScore));
-  
+for (var j = 0; j < scores.length; j++) {
+  console.log(chalk.blue(chalk.underline("High Score " + (j + 1)) + " " + scores[j].name, ":", scores[j].highestScore));
+
 }
