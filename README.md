@@ -17,4 +17,4 @@ And remember:
 JavaScript
 
 ### Demo:
-[IQ Tester](https://replit.com/@GauthamKamath/CLI-Quiz?embed=1&output=1))
+[IQ Tester](https://replit.com/@GauthamKamath/CLI-Quiz?embed=1&output=1)
